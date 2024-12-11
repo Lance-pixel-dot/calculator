@@ -4,61 +4,66 @@ const displayResult = document.querySelector('.display-result')
 const clear = document.querySelector('.clear');
 const result = document.querySelector('.result');
 
-function add(num1, num2){
-    return num1 + num2;
-}
-function subtract(num1, num2){
-    return num1 - num2;
-}
-function multiply(num1, num2){
-    return num1 * num2;
-}
-function divide(num1, num2){
-    return num1 / num2;
-}
+let operator = '';
+let num1 = '';
+let num2 = '';
+let tempResult = '';
+let finalResult = '';
 
-let operator = null;
-let num1;
-let num2;
+function add(){
+    return +num1 + +num2;
+}
+function subtract(){
+    return +num1 - +num2;
+}
+function multiply(){
+    return +num1 * +num2;
+}
+function divide(){
+    return +num1 / +num2;
+}
 
 function operate(){
 
     if(operator === '+'){
-       tempResult = add(+num1, +num2);
+       tempResult = add();
        num1 = tempResult;
-       displayResult.textContent = tempResult;
     }else if(operator === '-'){
-       tempResult = subtract(+num1, +num2);
+       tempResult = subtract();
        num1 = tempResult;
-       displayResult.textContent = tempResult;
     }else if(operator === 'x'){
-      tempResult = multiply(+num1, +num2);
+      tempResult = multiply();
       num1 = tempResult;
-      displayResult.textContent = tempResult;
     }else if(operator === '÷'){
-      tempResult = divide(+num1, +num2);
+      tempResult = divide();
       num1 = tempResult;
-      displayResult.textContent = tempResult;
     }
 
 }
-
-clear.addEventListener('click', () => displayResult.textContent = null);
+//make the clear  button also clears the num1, num2 and operator
+clear.addEventListener('click', () => {
+    displayResult.textContent = '';
+    num1 = '';
+    num2 = '';
+    operator = '';
+    tempResult = '';
+    finalResult = '';
+});
 
 //make num1 hold the first few inputted numbers 
 
 numberButtons.map(number => {
     number.addEventListener('click', (e) => {
+
         let targetNum = e.target.textContent;
         displayResult.textContent += targetNum;
 
-        if(operator !== null){
-            num2 = displayResult.textContent;
-            console.log(num2);
-            operate();
+        if(operator !== ''){
+            num2 += targetNum;
+            displayResult.textContent = num2;
         }else{
-            num1 = displayResult.textContent;
-            console.log(num1);
+            num1 += targetNum;
+            displayResult.textContent = num1;
         }
     })
 });
@@ -67,43 +72,25 @@ numberButtons.map(number => {
 
 operatorButtons.map(operators => {
     operators.addEventListener('click', (e) => {
+        operate();
         operator = e.target.textContent;
-        console.log(operator)
-        displayResult.textContent = null;
+        console.log(tempResult);
+        finalResult = tempResult;
+
+        if(num1 !== '' && num2 !== ''){
+            displayResult.textContent = tempResult;
+            num2 = '';
+        }
     })
 });
     
 //then store the calculated results in a variable  until another operator is chosen
-let tempResult;
  
 //when another set few of numbers is inputted store them as num2 
 //and make the temporary calculated results num1
 //until the user press equals and that will be the overall results of the calculation
 
-
 result.addEventListener('click', () => {
-    let separate
-    let output;
-    
-    if(operator === '+'){
-        separate = displayResult.textContent.split('+');
-        output = separate.reduce((num1, num2) => +num1 + +num2);
-        displayResult.textContent = output;
-
-    }else if(operator === '-'){
-        separate = displayResult.textContent.split('-');
-        output = separate.reduce((num1, num2) => +num1 - +num2);
-        displayResult.textContent = output;
-
-    }else if(operator === 'x'){
-        separate = displayResult.textContent.split('x');
-        output = separate.reduce((num1, num2) => +num1 * +num2);
-        displayResult.textContent = output;
-
-    }else if(operator === '÷'){
-        separate = displayResult.textContent.split('÷');
-        output = separate.reduce((num1, num2) => +num1 / +num2);
-        displayResult.textContent = output;
-    }
+    displayResult.textContent = finalResult;
 });
 
