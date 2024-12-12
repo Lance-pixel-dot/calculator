@@ -8,7 +8,6 @@ let operator = '';
 let num1 = '';
 let num2 = '';
 let tempResult = '';
-let finalResult = '';
 
 function add(){
     return +num1 + +num2;
@@ -47,7 +46,6 @@ clear.addEventListener('click', () => {
     num2 = '';
     operator = '';
     tempResult = '';
-    finalResult = '';
 });
 
 //make num1 hold the first few inputted numbers 
@@ -74,8 +72,6 @@ operatorButtons.map(operators => {
     operators.addEventListener('click', (e) => {
         operate();
         operator = e.target.textContent;
-        console.log(tempResult);
-        finalResult = tempResult;
 
         if(num1 !== '' && num2 !== ''){
             displayResult.textContent = tempResult;
@@ -90,7 +86,10 @@ operatorButtons.map(operators => {
 //and make the temporary calculated results num1
 //until the user press equals and that will be the overall results of the calculation
 
+//fix this
 result.addEventListener('click', () => {
-    displayResult.textContent = finalResult;
+    operate();
+    displayResult.textContent = tempResult;
+    operator = '';
 });
 
