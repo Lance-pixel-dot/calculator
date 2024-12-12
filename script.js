@@ -1,7 +1,7 @@
 const numberButtons = Array.from(document.querySelectorAll('.numbers'));
 const operatorButtons = Array.from(document.querySelectorAll('.operators'));
 const displayResult = document.querySelector('.display-result')
-const decimal = document.getElementsByClassName('.numbers decimal');
+const decimal = document.querySelector('#decimal');
 const clear = document.querySelector('.clear');
 const result = document.querySelector('.result');
 
@@ -10,6 +10,8 @@ let num1 = '';
 let num2 = '';
 let tempResult = '';
 let rndNum;
+
+displayResult.textContent = 0;
 
 function add(){
     rndNum = +num1 + +num2;
@@ -65,47 +67,53 @@ function operate(){
 }
 
 clear.addEventListener('click', () => {
-    displayResult.textContent = '';
     num1 = '';
     num2 = '';
     operator = '';
     tempResult = '';
+    displayResult.textContent = 0;
 });
 
+//fix this
+//start here
+//make sure that decimal concatenates on a number not replace decimal 
 numberButtons.map(number => {
     number.addEventListener('click', (e) => {
 
         let targetNum = e.target.textContent;
-        displayResult.textContent += targetNum;
-
-        console.log(targetNum);
 
         if(operator !== '' && num1 !== ''){
             num2 += targetNum;
             displayResult.textContent = num2;
-        }else if(num2 === '' && operator === ''){
+        }else if(num2 === '' && operator === '' && !targetNum.includes('.')){
             num1 += targetNum;
             displayResult.textContent = num1;
-        }else if(targetNum === '.'){
-            decimal.disabled = true;
-        }else if(operator === '' && num2 !== ''){
+        }
+
+        else if(targetNum.includes('.') && num2 === '' && operator === ''){
+            displayResult.textContent += '.';
+        }
+
+        else if(operator === '' && num2 !== ''){
             num1 = targetNum;
             displayResult.textContent = num1;
             num2 = '';
             tempResult = num1;
         }
+        console.log(targetNum.includes('.') && num2 === '' && operator === '');
+        console.log(num2 === '' && operator === '' && !targetNum.includes('.'));
     })
 });
 
-// decimal.addEventListener('click', () => {
-//     displayResult.textContent += '.';
-//     // decimal.disabled = true;
-// })
-
+decimal.addEventListener('click', () => {;
+    decimal.disabled = true;
+})
+//end
 operatorButtons.map(operators => {
     operators.addEventListener('click', (e) => {
         operate();
         operator = e.target.textContent;
+        decimal.disabled = false;
 
         if(num1 !== '' && num2 !== ''){
             displayResult.textContent = tempResult;
@@ -115,6 +123,7 @@ operatorButtons.map(operators => {
 });
 
 result.addEventListener('click', () => {
+    decimal.disabled = false;
     if(num2 === '' && operator === ''){
         displayResult.textContent = num1;
     }else{
