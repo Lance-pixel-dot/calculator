@@ -11,8 +11,6 @@ let num2 = '';
 let tempResult = '';
 let rndNum;
 
-displayResult.textContent = 0;
-
 function add(){
     rndNum = +num1 + +num2;
      if(rndNum % 1 !== 0){
@@ -72,47 +70,61 @@ clear.addEventListener('click', () => {
     operator = '';
     tempResult = '';
     displayResult.textContent = 0;
+    decimal.disabled = false;
 });
 
-//fix this
-//start here
-//make sure that decimal concatenates on a number not replace decimal 
 numberButtons.map(number => {
     number.addEventListener('click', (e) => {
 
         let targetNum = e.target.textContent;
 
         if(operator !== '' && num1 !== ''){
-            num2 += targetNum;
-            displayResult.textContent = num2;
-        }else if(num2 === '' && operator === '' && !targetNum.includes('.')){
-            num1 += targetNum;
-            displayResult.textContent = num1;
-        }
-
-        else if(targetNum.includes('.') && num2 === '' && operator === ''){
-            displayResult.textContent += '.';
-        }
-
-        else if(operator === '' && num2 !== ''){
-            num1 = targetNum;
-            displayResult.textContent = num1;
+            if(targetNum === '.'){
+                num2 = targetNum;
+                displayResult.textContent += num2;
+                num2 = displayResult.textContent;
+            }
+            else{
+                num2 += targetNum;
+                displayResult.textContent = num2;
+            }
+        }else if(num2 === '' && operator === ''){
+            if(targetNum === '.'){
+                num1 = targetNum;
+                displayResult.textContent += num1;
+                num1 = displayResult.textContent;
+            }else{
+                num1 += targetNum;
+                displayResult.textContent = num1;
+            }
+        }else if(operator === '' && num2 !== ''){
+            if(targetNum === '.'){
+                num1 = targetNum;
+                displayResult.textContent += num1;
+                num1 = displayResult.textContent;
+            }else{
+                num1 = targetNum;
+                displayResult.textContent = num1;
+            }
             num2 = '';
             tempResult = num1;
         }
-        console.log(targetNum.includes('.') && num2 === '' && operator === '');
-        console.log(num2 === '' && operator === '' && !targetNum.includes('.'));
+
+        console.log(targetNum === '.');
+
+        console.log(operator === '' && num2 !== '');
     })
 });
 
 decimal.addEventListener('click', () => {;
     decimal.disabled = true;
 })
-//end
+
 operatorButtons.map(operators => {
     operators.addEventListener('click', (e) => {
         operate();
         operator = e.target.textContent;
+
         decimal.disabled = false;
 
         if(num1 !== '' && num2 !== ''){
