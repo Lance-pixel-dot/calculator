@@ -73,6 +73,8 @@ clear.addEventListener('click', () => {
     decimal.disabled = false;
 });
 
+//please fix decimal disabling
+//start here
 numberButtons.map(number => {
     number.addEventListener('click', (e) => {
 
@@ -109,12 +111,13 @@ numberButtons.map(number => {
             num2 = '';
             tempResult = num1;
         }
-
-        console.log(targetNum === '.');
-
-        console.log(operator === '' && num2 !== '');
+        // else if(!displayResult.textContent.includes('.')){
+        //     decimal.disabled = false;
+        // }
     })
 });
+
+//end here
 
 decimal.addEventListener('click', () => {;
     decimal.disabled = true;
@@ -125,8 +128,6 @@ operatorButtons.map(operators => {
         operate();
         operator = e.target.textContent;
 
-        decimal.disabled = false;
-
         if(num1 !== '' && num2 !== ''){
             displayResult.textContent = tempResult;
             num2 = '';
@@ -135,13 +136,18 @@ operatorButtons.map(operators => {
 });
 
 result.addEventListener('click', () => {
-    decimal.disabled = false;
+    
     if(num2 === '' && operator === ''){
         displayResult.textContent = num1;
     }else{
         operate();
         displayResult.textContent = tempResult;
         operator = '';
+        if(displayResult.textContent.includes('.')){
+            decimal.disabled = true;
+        }else{
+            decimal.disabled = false;
+        }
     }
 });
 
