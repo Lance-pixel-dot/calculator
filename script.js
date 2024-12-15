@@ -73,8 +73,6 @@ clear.addEventListener('click', () => {
     decimal.disabled = false;
 });
 
-//please fix decimal disabling
-//start here
 numberButtons.map(number => {
     number.addEventListener('click', (e) => {
 
@@ -111,13 +109,13 @@ numberButtons.map(number => {
             num2 = '';
             tempResult = num1;
         }
-        // else if(!displayResult.textContent.includes('.')){
-        //     decimal.disabled = false;
-        // }
+
+        if(!displayResult.textContent.includes('.')){
+            decimal.disabled = false;
+        }
+
     })
 });
-
-//end here
 
 decimal.addEventListener('click', () => {;
     decimal.disabled = true;
