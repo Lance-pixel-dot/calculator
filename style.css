@@ -1,0 +1,68 @@
+body{
+    font-family: "Montserrat", sans-serif;
+}
+#calculator{
+    display: flex;
+    flex-direction: column;
+    font-size: 50px;
+    border: solid 3px #1e1e1e;
+    width: 390px;
+    align-items: center;
+    padding: 10px 0;
+    background: #dcdcdc;
+}
+button{
+    font-size: 50px;
+    background-color: #333333;
+    color: #dcdcdc
+}
+.buttons{
+    width: 359px;
+    border: 4px solid ;#1e1e1e
+}
+.display-result{
+    height: 30px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    padding-right: 10px;
+    width: 349px;
+    height: 70px;
+    border: solid 5px #1e1e1e;
+    background-color: #333333;
+    color: #dcdcdc;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.ac-backspace{
+    display: flex;
+    width: 362px;
+}
+.clear, .backspace{
+    font-size: 45px;
+    width: 180px;
+}
+.numberButtons{
+    display: flex;
+    flex-wrap: wrap;
+    width: 270px;
+}
+.numbers{
+    width: 90px;
+}
+#positiveOrNegative{
+    width: 90px;
+    font-size: 30px;
+}
+.operator-buttons{
+    display: flex;
+    flex-direction: column;
+    width: 90px;
+}
+.numbers-operators{
+    display: flex;
+    width: 362px;
+}
+.result{
+    width: 360px;
+}

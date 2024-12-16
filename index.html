@@ -3,38 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Calculator</title>
 </head>
 <body>
 
     <div id="calculator">
-    <div class="display-result"></div>
-    
-        <div class="numberButtons">
-            <button class="numbers">0</button>
-            <button class="numbers">1</button>
-            <button class="numbers">2</button>
-            <button class="numbers">3</button>
-            <button class="numbers">4</button>
-            <button class="numbers">5</button>
-            <button class="numbers">6</button>
-            <button class="numbers">7</button>
-            <button class="numbers">8</button>
-            <button class="numbers">9</button>
-            <button class="numbers" id="decimal">.</button>
-        </div>
+        <div class="display-result"></div>
         
-        <button id="positiveOrNegative">+/-</button>
-        <button class="backspace">⌫</button>
-        <button class="clear">AC</button>
-        <button class="operators">+</button>
-        <button class="operators">-</button>
-        <button class="operators">x</button>
-        <button class="operators">÷</button>
-        
-        <button class="result">=</button>
+        <div class="buttons">
 
+            <div class="ac-backspace">
+                <button class="clear">AC</button>
+                <button class="backspace">⌫</button> 
+            </div>   
+
+        
+            <div class = "numbers-operators">
+                <div class="numberButtons">
+                    <button class="numbers">7</button>
+                    <button class="numbers">8</button>
+                    <button class="numbers">9</button>
+                    <button class="numbers">4</button>
+                    <button class="numbers">5</button>
+                    <button class="numbers">6</button>
+                    <button class="numbers">1</button>
+                    <button class="numbers">2</button>
+                    <button class="numbers">3</button>
+                    <button class="numbers">0</button>
+                    <button class="numbers" id="decimal">.</button>
+                    <button id="positiveOrNegative">+/-</button>
+                </div>
+
+                <div class="operator-buttons">
+                    <button class="operators">+</button>
+                    <button class="operators">-</button>
+                    <button class="operators">x</button>
+                    <button class="operators">÷</button>
+                </div>
+
+            </div>
+
+            <button class="result">=</button>
+
+        </div>
     </div>
 
 <script src="script.js"></script>
