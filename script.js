@@ -91,7 +91,7 @@ clear.addEventListener('click', () => {
     num2 = '';
     operator = '';
     tempResult = '';
-    displayResult.textContent = 0;
+    displayResult.textContent = '';
     decimal.disabled = false;
     backspace.disabled = false;
 });
@@ -102,20 +102,20 @@ numberButtons.map(number => {
         let targetNum = e.target.textContent;
 
         if(operator !== '' && num1 !== ''){
-            if(targetNum === '.' || targetNum == 0 && displayResult.textContent != '0'){
+            if(targetNum === '.'){
                 num2 = targetNum;
                 displayResult.textContent += num2;
                 num2 = displayResult.textContent;
-            }else if(targetNum != 0){
+            }else{
                 num2 += targetNum;
                 displayResult.textContent = num2;
             }
         }else if(num2 === '' && operator === ''){
-            if(targetNum === '.' || targetNum == 0 && displayResult.textContent != '0'){
+            if(targetNum === '.'){
                 num1 = targetNum;
                 displayResult.textContent += num1;
                 num1 = displayResult.textContent;
-            }else if(targetNum != 0){
+            }else{
                 num1 += targetNum;
                 displayResult.textContent = num1;
             }
@@ -136,9 +136,6 @@ numberButtons.map(number => {
             decimal.disabled = false;
         }
 
-        console.log(targetNum !== '0' || displayResult.textContent == '0')
-        console.log(targetNum === '.')
-
     })
 });
 
@@ -149,7 +146,7 @@ decimal.addEventListener('click', () => {;
 positiveOrNegative.addEventListener('click', () => {
 
     if(displayResult.textContent == 0){
-        displayResult.textContent = 0;  
+        displayResult.textContent = '';  
     }else{
         displayResult.textContent = toNegativeOrPositive();
     }
@@ -162,7 +159,7 @@ backspace.addEventListener('click', () => {
     }
 
     if(displayResult.textContent.length === 0){
-        displayResult.textContent = 0;
+        displayResult.textContent = '';
     }
 
     if(num2 === ''){
@@ -173,12 +170,9 @@ backspace.addEventListener('click', () => {
 
 });
 
-//check here
 operatorButtons.map(operators => {
     operators.addEventListener('click', (e) => {
 
-        console.log('this is num1: ' + num1)
-        console.log('this is num2: ' + num2)
         operate();
         operator = e.target.textContent;
 
@@ -189,11 +183,8 @@ operatorButtons.map(operators => {
 
     })
 });
-//end
 
 result.addEventListener('click', () => {
-
-    backspace.disabled = true;
     
     if(num2 === '' && operator === ''){
         displayResult.textContent = num1;
@@ -208,7 +199,7 @@ result.addEventListener('click', () => {
         }
     }
     if(displayResult.textContent === ''){
-        displayResult.textContent = 0;
+        displayResult.textContent = '';
     }
 
 });
