@@ -48,15 +48,22 @@ function divide(){
     }
 }
 function toNegativeOrPositive(){
-    if(num1 > 0 || num2 > 0){
+    if(num1 > 0 ){
         displayResult.textContent = -displayResult.textContent;
+        num1 = displayResult.textContent;
+        return displayResult.textContent;
+    }else if(num2 > 0){
+        displayResult.textContent = -displayResult.textContent;
+        num2 = displayResult.textContent
+        return displayResult.textContent;
+    }else if(num1 < 0){
+        displayResult.textContent = Math.abs(displayResult.textContent);
+        num1 = displayResult.textContent;
+        return displayResult.textContent;
+    }else if(num2 < 0){
+        displayResult.textContent = Math.abs(displayResult.textContent);
         num2 = displayResult.textContent;
         return displayResult.textContent;
-    }else if(num1 < 0 || num2 < 0){
-        displayResult.textContent = Math.abs(displayResult.textContent);
-        return displayResult.textContent;
-    }else{
-        displayResult.textContent = 0;
     }
 
 }
@@ -95,20 +102,20 @@ numberButtons.map(number => {
         let targetNum = e.target.textContent;
 
         if(operator !== '' && num1 !== ''){
-            if(targetNum === '.' || operator === '+/-'){
+            if(targetNum === '.' || targetNum == 0 && displayResult.textContent != '0'){
                 num2 = targetNum;
                 displayResult.textContent += num2;
                 num2 = displayResult.textContent;
-            }else{
+            }else if(targetNum != 0){
                 num2 += targetNum;
                 displayResult.textContent = num2;
             }
         }else if(num2 === '' && operator === ''){
-            if(targetNum === '.' || operator === '+/-'){
+            if(targetNum === '.' || targetNum == 0 && displayResult.textContent != '0'){
                 num1 = targetNum;
                 displayResult.textContent += num1;
                 num1 = displayResult.textContent;
-            }else{
+            }else if(targetNum != 0){
                 num1 += targetNum;
                 displayResult.textContent = num1;
             }
@@ -129,17 +136,23 @@ numberButtons.map(number => {
             decimal.disabled = false;
         }
 
+        console.log(targetNum !== '0' || displayResult.textContent == '0')
+        console.log(targetNum === '.')
+
     })
 });
 
 decimal.addEventListener('click', () => {;
     decimal.disabled = true;
-    console.log(num2);
 })
 
 positiveOrNegative.addEventListener('click', () => {
-    displayResult.textContent = toNegativeOrPositive();
-    console.log(num2);
+
+    if(displayResult.textContent == 0){
+        displayResult.textContent = 0;  
+    }else{
+        displayResult.textContent = toNegativeOrPositive();
+    }
 })
 
 backspace.addEventListener('click', () => {
@@ -164,6 +177,8 @@ backspace.addEventListener('click', () => {
 operatorButtons.map(operators => {
     operators.addEventListener('click', (e) => {
 
+        console.log('this is num1: ' + num1)
+        console.log('this is num2: ' + num2)
         operate();
         operator = e.target.textContent;
 
@@ -172,8 +187,6 @@ operatorButtons.map(operators => {
             num2 = '';
         }
 
-        displayResult.textContent = num1;
-        console.log(num2)
     })
 });
 //end
