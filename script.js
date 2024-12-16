@@ -100,7 +100,7 @@ numberButtons.map(number => {
     number.addEventListener('click', (e) => {
 
         let targetNum = e.target.textContent;
-
+    
         if(operator !== '' && num1 !== ''){
             if(targetNum === '.'){
                 num2 = targetNum;
@@ -131,13 +131,66 @@ numberButtons.map(number => {
             num2 = '';
             tempResult = num1;
         }
-
+    
         if(!displayResult.textContent.includes('.')){
             decimal.disabled = false;
         }
-
+    
     })
 });
+
+document.addEventListener('keydown', (e) => {
+    let numKey = e.code;
+    let numSelect = e.key;
+    let targetNum;
+    switch(numKey){
+        case 'Digit1':
+            targetNum = numSelect;
+            break;
+        case 'Digit2':
+            targetNum = numSelect;
+            break;
+        case 'Digit3':
+            targetNum = numSelect;
+            break;
+        case 'Digit4':
+            targetNum = numSelect;
+            break;
+        case 'Digit5':
+            targetNum = numSelect;
+            break;
+        case 'Digit6':
+            targetNum = numSelect;
+            break;
+        case 'Digit7':
+            targetNum = numSelect;
+            break;
+        case 'Digit8':
+            targetNum = numSelect;
+            break;
+        case 'Digit9':
+            targetNum = numSelect;
+            break;
+        case 'Digit0':
+            targetNum = numSelect;
+            break;
+        default:
+            targetNum = '';
+    }
+
+    if(operator !== '' && num1 !== ''){
+        num2 += targetNum;
+        displayResult.textContent = num2;
+    }else if(num2 === '' && operator === ''){
+        num1 += targetNum;
+        displayResult.textContent = num1;
+    }else if(operator === '' && num2 !== ''){
+        num1 = targetNum;
+        displayResult.textContent = num1;
+        num2 = '';
+        tempResult = num1;
+    }
+})
 
 decimal.addEventListener('click', () => {;
     decimal.disabled = true;
@@ -152,23 +205,35 @@ positiveOrNegative.addEventListener('click', () => {
     }
 })
 
-backspace.addEventListener('click', () => {
+let erase = (e) => {
 
-    if(displayResult.textContent != 0){
-    displayResult.textContent = displayResult.textContent.substring(0, displayResult.textContent.length - 1);
+    let keyCode = e.code;
+
+    console.log(keyCode);
+
+    if(keyCode === 'Backspace'){
+
+        if(displayResult.textContent != 0){
+        displayResult.textContent = displayResult.textContent.substring(0, displayResult.textContent.length - 1);
+        }
+
+        if(displayResult.textContent.length === 0){
+            displayResult.textContent = '';
+        }
+
+        if(num2 === ''){
+            num1 = displayResult.textContent;
+        }else{
+            num2 = displayResult.textContent;
+        }
+
     }
 
-    if(displayResult.textContent.length === 0){
-        displayResult.textContent = '';
-    }
+}
 
-    if(num2 === ''){
-        num1 = displayResult.textContent;
-    }else{
-        num2 = displayResult.textContent;
-    }
+backspace.addEventListener('click', erase);
 
-});
+backspace.addEventListener('keydown', erase);
 
 operatorButtons.map(operators => {
     operators.addEventListener('click', (e) => {
