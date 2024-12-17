@@ -13,6 +13,10 @@ let num2 = '';
 let tempResult = '';
 let rndNum;
 
+if(!displayResult.textContent.includes('.')){
+    decimal.disabled = true;
+}
+
 function add(){
     rndNum = +num1 + +num2;
      if(rndNum % 1 !== 0){
@@ -48,21 +52,12 @@ function divide(){
     }
 }
 function toNegativeOrPositive(){
-    if(num1 > 0 ){
-        displayResult.textContent = -displayResult.textContent;
-        num1 = displayResult.textContent;
-        return displayResult.textContent;
-    }else if(num2 > 0){
-        displayResult.textContent = -displayResult.textContent;
-        num2 = displayResult.textContent
-        return displayResult.textContent;
-    }else if(num1 < 0){
-        displayResult.textContent = Math.abs(displayResult.textContent);
-        num1 = displayResult.textContent;
-        return displayResult.textContent;
-    }else if(num2 < 0){
+    if(num1 < 0 || num2 < 0){
         displayResult.textContent = Math.abs(displayResult.textContent);
         num2 = displayResult.textContent;
+        return displayResult.textContent;
+    }else if(num1 > 0 || num2 > 0){
+        displayResult.textContent = -displayResult.textContent;
         return displayResult.textContent;
     }
 
@@ -174,22 +169,55 @@ document.addEventListener('keydown', (e) => {
         case 'Digit0':
             targetNum = numSelect;
             break;
+        case 'Period':
+            targetNum = numSelect;
+            decimal.disabled = true;
+            if(displayResult.textContent.includes('.') ||displayResult.textContent === ''){
+                targetNum = '';
+            }
+            break;
+        case 'Backspace':
+            erase();
         default:
             targetNum = '';
     }
 
     if(operator !== '' && num1 !== ''){
-        num2 += targetNum;
-        displayResult.textContent = num2;
+        if(targetNum === '.'){
+            num2 = targetNum;
+            displayResult.textContent += num2;
+            num2 = displayResult.textContent;
+        }else{
+            num2 += targetNum;
+            displayResult.textContent = num2;
+        }
     }else if(num2 === '' && operator === ''){
-        num1 += targetNum;
-        displayResult.textContent = num1;
+        if(targetNum === '.'){
+            num1 = targetNum;
+            displayResult.textContent += num1;
+            num1 = displayResult.textContent;
+        }else{
+            num1 += targetNum;
+            displayResult.textContent = num1;
+        }
     }else if(operator === '' && num2 !== ''){
-        num1 = targetNum;
-        displayResult.textContent = num1;
+        if(targetNum === '.'){
+            num1 = targetNum;
+            displayResult.textContent += num1;
+            num1 = displayResult.textContent;
+        }else{
+            num1 = targetNum;
+            displayResult.textContent = num1;
+        }
         num2 = '';
         tempResult = num1;
     }
+
+    if(!displayResult.textContent.includes('.')){
+        decimal.disabled = false;
+    }
+
+    console.log(e.code);
 })
 
 decimal.addEventListener('click', () => {;
@@ -205,13 +233,7 @@ positiveOrNegative.addEventListener('click', () => {
     }
 })
 
-let erase = (e) => {
-
-    let keyCode = e.code;
-
-    console.log(keyCode);
-
-    if(keyCode === 'Backspace'){
+function erase(){
 
         if(displayResult.textContent != 0){
         displayResult.textContent = displayResult.textContent.substring(0, displayResult.textContent.length - 1);
@@ -227,13 +249,9 @@ let erase = (e) => {
             num2 = displayResult.textContent;
         }
 
-    }
-
 }
 
 backspace.addEventListener('click', erase);
-
-backspace.addEventListener('keydown', erase);
 
 operatorButtons.map(operators => {
     operators.addEventListener('click', (e) => {
@@ -249,7 +267,10 @@ operatorButtons.map(operators => {
     })
 });
 
-result.addEventListener('click', () => {
+function revealResult(){
+
+    console.log(num2);
+    console.log(num1);
     
     if(num2 === '' && operator === ''){
         displayResult.textContent = num1;
@@ -267,5 +288,7 @@ result.addEventListener('click', () => {
         displayResult.textContent = '';
     }
 
-});
+}
+
+result.addEventListener('click', revealResult);
 

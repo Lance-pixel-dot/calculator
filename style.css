@@ -1,5 +1,10 @@
 body{
     font-family: "Montserrat", sans-serif;
+    background-color: #dcdcdc;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 #calculator{
     display: flex;
@@ -10,6 +15,8 @@ body{
     align-items: center;
     padding: 10px 0;
     background: #dcdcdc;
+    border-radius: 10px;
+    box-shadow: 5px 10px 8px #888888;
 }
 button{
     font-size: 50px;
