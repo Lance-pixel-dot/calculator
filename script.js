@@ -13,72 +13,88 @@ let num2 = '';
 let tempResult = '';
 let rndNum;
 
-if(!displayResult.textContent.includes('.')){
-    decimal.disabled = true;
+if (!displayResult.textContent.includes('.')) {
+    decimal.disabled = false;
 }
 
-function add(){
+function add() {
     rndNum = +num1 + +num2;
-     if(rndNum % 1 !== 0){
-       return rndNum.toFixed(2);    
-    }else{ 
-       return rndNum;
+    if (rndNum % 1 !== 0) {
+        return rndNum.toFixed(2);
+    } else {
+        return rndNum;
     }
 }
-function subtract(){
+
+function subtract() {
     rndNum = +num1 - +num2;
-    if(rndNum % 1 !== 0){
-       return rndNum.toFixed(2);    
-    }else{ 
-       return rndNum;
+    if (rndNum % 1 !== 0) {
+        return rndNum.toFixed(2);
+    } else {
+        return rndNum;
     }
 }
-function multiply(){
+
+function multiply() {
     rndNum = +num1 * +num2;
-    if(rndNum % 1 !== 0){
-       return rndNum.toFixed(2);    
-    }else{ 
-       return rndNum;
+    if (rndNum % 1 !== 0) {
+        return rndNum.toFixed(2);
+    } else {
+        return rndNum;
     }
 }
-function divide(){
+
+function divide() {
     rndNum = +num1 / +num2;
-    if(num1 == 0 || num2 == 0){
-       return 'ERROR';
-    }else if(rndNum % 1 !== 0){
-       return rndNum.toFixed(2);    
-    }else{ 
-       return rndNum;
+    if (+num2 === 0) {
+        return 'ERROR';
+    } else if (rndNum % 1 !== 0) {
+        return rndNum.toFixed(2);
+    } else {
+        return rndNum;
     }
 }
-function toNegativeOrPositive(){
-    if(num1 < 0 || num2 < 0){
-        displayResult.textContent = Math.abs(displayResult.textContent);
-        num2 = displayResult.textContent;
-        return displayResult.textContent;
-    }else if(num1 > 0 || num2 > 0){
-        displayResult.textContent = -displayResult.textContent;
-        return displayResult.textContent;
-    }
 
+function toNegativeOrPositive() {
+    let currentDisplay = parseFloat(displayResult.textContent);
+    if (isNaN(currentDisplay)) return '';
+
+    if (currentDisplay === 0) {
+        return '0';
+    } else {
+        let newValue = -currentDisplay;
+        if (num2 !== '') {
+            num2 = newValue.toString();
+            return num2;
+        } else {
+            num1 = newValue.toString();
+            return num1;
+        }
+    }
 }
 
-function operate(){
-
-    if(operator === '+' && num2 !== ''){
-       tempResult = add();
-       num1 = tempResult;
-    }else if(operator === '-' && num2 !== ''){
-       tempResult = subtract();
-       num1 = tempResult;
-    }else if(operator === 'x' && num2 !== ''){
-      tempResult = multiply();
-      num1 = tempResult;
-    }else if(operator === '÷' && num2 !== ''){
-      tempResult = divide();
-      num1 = tempResult;
+function operate() {
+    if (num1 === '' || num2 === '' || operator === '') {
+        return;
     }
 
+    switch (operator) {
+        case '+':
+            tempResult = add();
+            break;
+        case '-':
+            tempResult = subtract();
+            break;
+        case 'x':
+            tempResult = multiply();
+            break;
+        case '÷':
+            tempResult = divide();
+            break;
+        default:
+            return;
+    }
+    num1 = tempResult;
 }
 
 clear.addEventListener('click', () => {
@@ -93,202 +109,199 @@ clear.addEventListener('click', () => {
 
 numberButtons.map(number => {
     number.addEventListener('click', (e) => {
-
         let targetNum = e.target.textContent;
-    
-        if(operator !== '' && num1 !== ''){
-            if(targetNum === '.'){
-                num2 = targetNum;
-                displayResult.textContent += num2;
-                num2 = displayResult.textContent;
-            }else{
-                num2 += targetNum;
-                displayResult.textContent = num2;
-            }
-        }else if(num2 === '' && operator === ''){
-            if(targetNum === '.'){
-                num1 = targetNum;
-                displayResult.textContent += num1;
-                num1 = displayResult.textContent;
-            }else{
-                num1 += targetNum;
-                displayResult.textContent = num1;
-            }
-        }else if(operator === '' && num2 !== ''){
-            if(targetNum === '.'){
-                num1 = targetNum;
-                displayResult.textContent += num1;
-                num1 = displayResult.textContent;
-            }else{
-                num1 = targetNum;
-                displayResult.textContent = num1;
-            }
-            num2 = '';
-            tempResult = num1;
+
+        if (targetNum === '.' && displayResult.textContent.includes('.') && operator === '') {
+            return;
         }
-    
-        if(!displayResult.textContent.includes('.')){
+        if (targetNum === '.' && num2.includes('.') && operator !== '') {
+            return;
+        }
+
+        if (operator !== '' && num1 !== '') {
+            if (num2 === '' && targetNum === '.') {
+                num2 = '0.';
+            } else {
+                num2 += targetNum;
+            }
+            displayResult.textContent = num2;
+        } else {
+            if (num1 === '' && targetNum === '.') {
+                num1 = '0.';
+            } else {
+                num1 += targetNum;
+            }
+            displayResult.textContent = num1;
+            num2 = '';
+            tempResult = '';
+        }
+
+        if (displayResult.textContent.includes('.')) {
+            decimal.disabled = true;
+        } else {
             decimal.disabled = false;
         }
-    
-    })
+    });
 });
 
 document.addEventListener('keydown', (e) => {
-    let numKey = e.code;
-    let numSelect = e.key;
-    let targetNum;
-    switch(numKey){
-        case 'Digit1':
-            targetNum = numSelect;
-            break;
-        case 'Digit2':
-            targetNum = numSelect;
-            break;
-        case 'Digit3':
-            targetNum = numSelect;
-            break;
-        case 'Digit4':
-            targetNum = numSelect;
-            break;
-        case 'Digit5':
-            targetNum = numSelect;
-            break;
-        case 'Digit6':
-            targetNum = numSelect;
-            break;
-        case 'Digit7':
-            targetNum = numSelect;
-            break;
-        case 'Digit8':
-            targetNum = numSelect;
-            break;
-        case 'Digit9':
-            targetNum = numSelect;
-            break;
-        case 'Digit0':
-            targetNum = numSelect;
-            break;
-        case 'Period':
-            targetNum = numSelect;
-            decimal.disabled = true;
-            if(displayResult.textContent.includes('.') ||displayResult.textContent === ''){
-                targetNum = '';
-            }
-            break;
-        case 'Backspace':
-            erase();
-        default:
-            targetNum = '';
-    }
+    let key = e.key;
+    let targetNum = '';
 
-    if(operator !== '' && num1 !== ''){
-        if(targetNum === '.'){
-            num2 = targetNum;
-            displayResult.textContent += num2;
-            num2 = displayResult.textContent;
-        }else{
-            num2 += targetNum;
-            displayResult.textContent = num2;
-        }
-    }else if(num2 === '' && operator === ''){
-        if(targetNum === '.'){
-            num1 = targetNum;
-            displayResult.textContent += num1;
+    if (key >= '0' && key <= '9') {
+        targetNum = key;
+    } else if (key === '.') {
+        targetNum = key;
+    } else if (key === 'Backspace') {
+        erase();
+        return;
+    } else if (key === 'Enter') {
+        revealResult();
+        return;
+    } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+        let displayOperator = key;
+        if (key === '*') displayOperator = 'x';
+        if (key === '/') displayOperator = '÷';
+        
+        operate();
+        operator = displayOperator;
+        if (num1 !== '' && num2 !== '') {
+            displayResult.textContent = tempResult;
+            num2 = '';
+        } else if (displayResult.textContent !== '' && num1 === '') {
             num1 = displayResult.textContent;
-        }else{
-            num1 += targetNum;
-            displayResult.textContent = num1;
+            num2 = '';
         }
-    }else if(operator === '' && num2 !== ''){
-        if(targetNum === '.'){
-            num1 = targetNum;
-            displayResult.textContent += num1;
-            num1 = displayResult.textContent;
-        }else{
-            num1 = targetNum;
-            displayResult.textContent = num1;
-        }
-        num2 = '';
-        tempResult = num1;
-    }
-
-    if(!displayResult.textContent.includes('.')){
         decimal.disabled = false;
+        return;
     }
 
-    console.log(e.code);
-})
+    if (targetNum !== '') {
+        if (targetNum === '.' && displayResult.textContent.includes('.') && operator === '') {
+            return;
+        }
+        if (targetNum === '.' && num2.includes('.') && operator !== '') {
+            return;
+        }
 
-decimal.addEventListener('click', () => {;
-    decimal.disabled = true;
-})
+        if (operator !== '' && num1 !== '') {
+            if (num2 === '' && targetNum === '.') {
+                num2 = '0.';
+            } else {
+                num2 += targetNum;
+            }
+            displayResult.textContent = num2;
+        } else {
+            if (num1 === '' && targetNum === '.') {
+                num1 = '0.';
+            } else {
+                num1 += targetNum;
+            }
+            displayResult.textContent = num1;
+            num2 = '';
+            tempResult = '';
+        }
+
+        if (displayResult.textContent.includes('.')) {
+            decimal.disabled = true;
+        } else {
+            decimal.disabled = false;
+        }
+    }
+});
+
+decimal.addEventListener('click', () => {
+    if (!displayResult.textContent.includes('.')) {
+        if (operator !== '' && num1 !== '') {
+            num2 += '.';
+            displayResult.textContent = num2;
+        } else {
+            num1 += '.';
+            displayResult.textContent = num1;
+        }
+        decimal.disabled = true;
+    }
+});
 
 positiveOrNegative.addEventListener('click', () => {
-
-    if(displayResult.textContent == 0){
-        displayResult.textContent = '';  
-    }else{
-        displayResult.textContent = toNegativeOrPositive();
+    displayResult.textContent = toNegativeOrPositive();
+    if (operator === '') {
+        num1 = displayResult.textContent;
+    } else {
+        num2 = displayResult.textContent;
     }
-})
+});
 
-function erase(){
-
-        if(displayResult.textContent != 0){
-        displayResult.textContent = displayResult.textContent.substring(0, displayResult.textContent.length - 1);
+function erase() {
+    if (displayResult.textContent !== '') {
+        let currentDisplay = displayResult.textContent;
+        if (currentDisplay.endsWith('.')) {
+            decimal.disabled = false;
         }
+        displayResult.textContent = currentDisplay.substring(0, currentDisplay.length - 1);
 
-        if(displayResult.textContent.length === 0){
-            displayResult.textContent = '';
-        }
-
-        if(num2 === ''){
+        if (operator === '') {
             num1 = displayResult.textContent;
-        }else{
+        } else {
             num2 = displayResult.textContent;
         }
 
+        if (displayResult.textContent.length === 0) {
+            num1 = '';
+            num2 = '';
+            decimal.disabled = false;
+        }
+    }
 }
 
 backspace.addEventListener('click', erase);
 
 operatorButtons.map(operators => {
     operators.addEventListener('click', (e) => {
-
-        operate();
-        operator = e.target.textContent;
-
-        if(num1 !== '' && num2 !== ''){
+        if (num1 !== '' && num2 !== '' && operator !== '') {
+            operate();
             displayResult.textContent = tempResult;
+            num1 = tempResult;
             num2 = '';
+        } else if (displayResult.textContent !== '' && num1 === '') {
+            num1 = displayResult.textContent;
         }
-
-    })
+        operator = e.target.textContent;
+        decimal.disabled = false;
+    });
 });
 
-function revealResult(){
+function revealResult() {
+    if (num1 === '') {
+        displayResult.textContent = '';
+        return;
+    }
 
-    console.log(num2);
-    console.log(num1);
-    
-    if(num2 === '' && operator === ''){
+    if (operator === '' || num2 === '') {
         displayResult.textContent = num1;
-    }else{
+    } else {
         operate();
         displayResult.textContent = tempResult;
         operator = '';
-        if(displayResult.textContent.includes('.')){
+        num1 = tempResult;
+        num2 = '';
+
+        if (displayResult.textContent.includes('.')) {
             decimal.disabled = true;
-        }else{
+        } else {
+            decimal.disabled = false;
+        }
+
+        if (displayResult.textContent === 'ERROR') {
+            num1 = '';
+            num2 = '';
+            operator = '';
             decimal.disabled = false;
         }
     }
-    if(displayResult.textContent === ''){
+    if (displayResult.textContent === '') {
         displayResult.textContent = '';
     }
-
 }
 
 result.addEventListener('click', revealResult);
-

@@ -1,75 +1,196 @@
-body{
+body {
     font-family: "Montserrat", sans-serif;
     background-color: #dcdcdc;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 100vh;
+    margin: 0;
 }
-#calculator{
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#calculator {
     display: flex;
     flex-direction: column;
     font-size: 50px;
     border: solid 3px #1e1e1e;
-    width: 390px;
+    width: 90%;
+    max-width: 390px;
     align-items: center;
     padding: 10px 0;
     background: #dcdcdc;
     border-radius: 10px;
     box-shadow: 5px 10px 8px #888888;
+    box-sizing: border-box;
 }
-button{
+
+button {
     font-size: 50px;
     background-color: #333333;
-    color: #dcdcdc
+    color: #dcdcdc;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    border-radius: 5px;
 }
-.buttons{
-    width: 359px;
+
+button:hover {
+    background-color: #555555;
+}
+
+button:active {
+    background-color: #1e1e1e;
+}
+
+.buttons {
+    width: calc(100% - 20px);
     border: 4px solid #1e1e1e;
+    box-sizing: border-box;
 }
-.display-result{
-    height: 30px;
+
+.display-result {
     display: flex;
     flex-direction: row-reverse;
     align-items: center;
     padding-right: 10px;
-    width: 349px;
+    width: calc(100% - 30px);
     height: 70px;
     border: solid 5px #1e1e1e;
     background-color: #333333;
     color: #dcdcdc;
     font-weight: bold;
     margin-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 2.5rem;
+    overflow: hidden;
+    white-space: nowrap;
 }
-.ac-backspace{
+
+.ac-backspace {
     display: flex;
-    width: 362px;
+    width: 100%;
 }
-.clear, .backspace{
-    font-size: 45px;
-    width: 180px;
+
+.clear, .backspace {
+    font-size: 1.8rem;
+    width: 50%;
+    padding: 10px 0;
 }
-.numberButtons{
+
+.numberButtons {
     display: flex;
     flex-wrap: wrap;
-    width: 270px;
+    width: 75%;
 }
-.numbers{
-    width: 90px;
+
+.numbers {
+    width: 33.333%;
+    padding: 15px 0;
+    font-size: 2.2rem;
 }
-#positiveOrNegative{
-    width: 90px;
-    font-size: 30px;
+
+#positiveOrNegative {
+    width: 33.333%;
+    font-size: 1.8rem;
+    padding: 15px 0;
 }
-.operator-buttons{
+
+.operator-buttons {
     display: flex;
     flex-direction: column;
-    width: 90px;
+    width: 25%;
 }
-.numbers-operators{
+
+.operators {
+    width: 100%;
+    height: 25%;
+    padding: 15px 0;
+    font-size: 2.2rem;
+}
+
+.numbers-operators {
     display: flex;
-    width: 362px;
+    width: 100%;
 }
-.result{
-    width: 360px;
+
+.result {
+    width: 100%;
+    padding: 15px 0;
+    font-size: 2.5rem;
+}
+
+@media (max-width: 375px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    #calculator {
+        width: 95%;
+    }
+
+    .display-result {
+        font-size: 2.2rem;
+        height: 60px;
+    }
+
+    .clear, .backspace {
+        font-size: 1.6rem;
+        padding: 8px 0;
+    }
+
+    .numbers, #positiveOrNegative {
+        font-size: 2rem;
+        padding: 12px 0;
+    }
+
+    .operators {
+        font-size: 2rem;
+        padding: 12px 0;
+    }
+
+    .result {
+        font-size: 2.2rem;
+        padding: 12px 0;
+    }
+}
+
+@media (max-width: 320px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    #calculator {
+        width: 98%;
+    }
+
+    .display-result {
+        font-size: 1.8rem;
+        height: 55px;
+        padding-right: 8px;
+    }
+
+    .clear, .backspace {
+        font-size: 1.4rem;
+        padding: 6px 0;
+    }
+
+    .numbers, #positiveOrNegative {
+        font-size: 1.8rem;
+        padding: 10px 0;
+    }
+
+    .operators {
+        font-size: 1.8rem;
+        padding: 10px 0;
+    }
+
+    .result {
+        font-size: 2rem;
+        padding: 10px 0;
+    }
 }
